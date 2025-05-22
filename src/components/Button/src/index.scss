@@ -1,0 +1,75 @@
+@use "sass:color";
+
+// 按钮变量
+$button-primary-bg: #3498db;
+$button-primary-color: #ffffff;
+$button-secondary-bg: #e0e0e0;
+$button-secondary-color: #333333;
+$button-outline-bg: transparent;
+$button-outline-color: #3498db;
+$button-outline-border: #3498db;
+$button-transition: all 0.3s ease;
+$button-disabled-opacity: 0.6;
+
+// 按钮基础样式
+.QinComponents-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  font-weight: 500;
+  transition: $button-transition;
+  
+  &:disabled {
+    opacity: $button-disabled-opacity;
+    cursor: not-allowed;
+  }
+  
+  // 按钮变体
+  &--primary {
+    background-color: $button-primary-bg;
+    color: $button-primary-color;
+    
+    &:hover:not(:disabled) {
+      background-color: color.adjust($button-primary-bg, $lightness: -10%);
+    }
+  }
+  
+  &--secondary {
+    background-color: $button-secondary-bg;
+    color: $button-secondary-color;
+    
+    &:hover:not(:disabled) {
+      background-color: color.adjust($button-secondary-bg, $lightness: -10%);
+    }
+  }
+  
+  &--outline {
+    background-color: $button-outline-bg;
+    color: $button-outline-color;
+    border: 1px solid $button-outline-border;
+    
+    &:hover:not(:disabled) {
+      background-color: rgba($button-outline-color, 0.1);
+    }
+  }
+  
+  // 按钮尺寸
+  &--small {
+    padding: 6px 12px;
+    font-size: 12px;
+  }
+  
+  &--medium {
+    padding: 8px 16px;
+    font-size: 14px;
+  }
+  
+  &--large {
+    padding: 10px 20px;
+    font-size: 16px;
+  }
+} 

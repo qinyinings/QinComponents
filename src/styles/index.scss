@@ -1,0 +1,48 @@
+@use './variables';
+
+// 全局样式重置
+body {
+  margin: 0;
+  padding: 0;
+  font-family: variables.$font-family;
+  font-size: variables.$font-size-base;
+  color: variables.$text-color-primary;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+// 通用样式助手
+.mc-text-ellipsis {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.mc-flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.mc-flex-between {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+// 可访问性样式
+.mc-visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+} 
