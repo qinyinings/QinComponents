@@ -1,0 +1,14 @@
+// ===========================================
+// QinComponents 样式入口文件
+// ===========================================
+
+// 导入全局样式（包含设计 tokens 和基础样式）
+@use './styles/index';
+
+// 导入所有组件样式
+@use './components/Button/src/index';
+@use './components/Input/src/index';
+@use './components/Card/src/index';
+
+// 注意：当添加新组件时，需要在这里添加对应的样式导入
+// 例如：@use './components/NewComponent/src/index';

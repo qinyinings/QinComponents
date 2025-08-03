@@ -51,8 +51,13 @@
     "vite": "^6.3.5",
     "vitest": "^3.1.4"
   },
-  "description": "This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.",
-  "main": "eslint.config.js",
+  "description": "QinComponents 是一个基于 React + Vite + SCSS + Storybook 搭建的现代化组件库，提供了一系列可复用的 UI 组件。",
+  "main": "dist/index.js",
+  "module": "dist/index.esm.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
   "keywords": [],
   "author": "",
   "license": "ISC",

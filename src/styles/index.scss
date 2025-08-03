@@ -1,12 +1,14 @@
-@use './variables';
+@use './variables' as *;
 
 // 全局样式重置
 body {
   margin: 0;
   padding: 0;
-  font-family: variables.$font-family;
-  font-size: variables.$font-size-base;
-  color: variables.$text-color-primary;
+  font-family: $font-family-sans;
+  font-size: $font-size-base;
+  color: $text-color-primary;
+  line-height: $line-height-normal;
+  background-color: $background-color-base;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -15,27 +17,97 @@ body {
   box-sizing: border-box;
 }
 
+// 全局滚动条样式
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: $qin-gray-100;
+}
+
+::-webkit-scrollbar-thumb {
+  background: $qin-gray-400;
+  border-radius: $border-radius-full;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: $qin-gray-500;
+}
+
 // 通用样式助手
-.mc-text-ellipsis {
+.qin-text-ellipsis {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 
-.mc-flex-center {
+.qin-flex-center {
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-.mc-flex-between {
+.qin-flex-between {
   display: flex;
   align-items: center;
   justify-content: space-between;
 }
 
+.qin-flex-start {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.qin-flex-end {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+// 间距助手类
+@each $size, $value in (
+  xs: $spacing-xs,
+  sm: $spacing-sm,
+  md: $spacing-md,
+  base: $spacing-base,
+  lg: $spacing-lg,
+  xl: $spacing-xl,
+  2xl: $spacing-2xl,
+  3xl: $spacing-3xl
+) {
+  .qin-m-#{$size} { margin: $value; }
+  .qin-mt-#{$size} { margin-top: $value; }
+  .qin-mr-#{$size} { margin-right: $value; }
+  .qin-mb-#{$size} { margin-bottom: $value; }
+  .qin-ml-#{$size} { margin-left: $value; }
+  .qin-mx-#{$size} { margin-left: $value; margin-right: $value; }
+  .qin-my-#{$size} { margin-top: $value; margin-bottom: $value; }
+  
+  .qin-p-#{$size} { padding: $value; }
+  .qin-pt-#{$size} { padding-top: $value; }
+  .qin-pr-#{$size} { padding-right: $value; }
+  .qin-pb-#{$size} { padding-bottom: $value; }
+  .qin-pl-#{$size} { padding-left: $value; }
+  .qin-px-#{$size} { padding-left: $value; padding-right: $value; }
+  .qin-py-#{$size} { padding-top: $value; padding-bottom: $value; }
+}
+
+// 文本颜色助手类
+.qin-text-primary { color: $text-color-primary; }
+.qin-text-secondary { color: $text-color-secondary; }
+.qin-text-tertiary { color: $text-color-tertiary; }
+.qin-text-disabled { color: $text-color-disabled; }
+.qin-text-inverse { color: $text-color-inverse; }
+.qin-text-success { color: $success-color; }
+.qin-text-warning { color: $warning-color; }
+.qin-text-error { color: $error-color; }
+.qin-text-info { color: $info-color; }
+
 // 可访问性样式
-.mc-visually-hidden {
+.qin-visually-hidden {
   position: absolute;
   width: 1px;
   height: 1px;
@@ -45,4 +117,10 @@ body {
   clip: rect(0, 0, 0, 0);
   white-space: nowrap;
   border-width: 0;
+}
+
+// Focus 样式
+.qin-focus-visible:focus-visible {
+  outline: 2px solid $primary-color;
+  outline-offset: 2px;
 } 

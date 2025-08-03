@@ -1,84 +1,97 @@
-// 输入框变量
-$input-border-color: #dcdfe6;
-$input-border-radius: 4px;
-$input-focus-border-color: #3498db;
-$input-transition: all 0.3s ease;
-$input-text-color: #333333;
-$input-placeholder-color: #aaaaaa;
-$input-disabled-bg: #f5f7fa;
-$input-error-color: #ff4d4f;
+@use "../../../styles/variables" as *;
 
 // 输入框容器
 .QinComponents-input-wrapper {
   display: flex;
   flex-direction: column;
-  margin-bottom: 16px;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  margin-bottom: $spacing-base;
+  font-family: $font-family-sans;
 }
 
 // 输入框标签
 .QinComponents-input-label {
-  font-size: 14px;
-  margin-bottom: 6px;
-  color: $input-text-color;
-  font-weight: 500;
+  font-size: $font-size-base;
+  margin-bottom: $spacing-xs;
+  color: $text-color-primary;
+  font-weight: $font-weight-medium;
+  line-height: $line-height-normal;
 }
 
 // 输入框基础样式
 .QinComponents-input {
   display: block;
   width: 100%;
-  padding: 0 12px;
-  border: 1px solid $input-border-color;
-  border-radius: $input-border-radius;
-  transition: $input-transition;
-  color: $input-text-color;
+  padding: 0 $spacing-md;
+  border: 1px solid $border-color-base;
+  border-radius: $border-radius-sm;
+  transition: $transition-border, $transition-shadow;
+  color: $text-color-primary;
+  background-color: $background-color-light;
+  font-family: $font-family-sans;
+  line-height: $line-height-normal;
   
   &:focus {
     outline: none;
-    border-color: $input-focus-border-color;
-    box-shadow: 0 0 0 2px rgba($input-focus-border-color, 0.2);
+    border-color: $primary-color;
+    box-shadow: $shadow-focus;
   }
   
   &::placeholder {
-    color: $input-placeholder-color;
+    color: $text-color-tertiary;
   }
   
   &:disabled {
-    background-color: $input-disabled-bg;
+    background-color: $background-color-disabled;
+    color: $text-color-disabled;
     cursor: not-allowed;
     opacity: 0.7;
+    
+    &::placeholder {
+      color: $text-color-disabled;
+    }
+  }
+  
+  &:hover:not(:disabled):not(:focus) {
+    border-color: $border-color-light;
   }
   
   // 输入框尺寸
   &--small {
-    height: 32px;
-    font-size: 12px;
+    height: $input-height-sm;
+    font-size: $font-size-sm;
+    padding: 0 $spacing-sm;
   }
   
   &--medium {
-    height: 40px;
-    font-size: 14px;
+    height: $input-height-base;
+    font-size: $font-size-base;
   }
   
   &--large {
-    height: 48px;
-    font-size: 16px;
+    height: $input-height-lg;
+    font-size: $font-size-md;
+    padding: 0 $spacing-base;
   }
   
   // 错误状态
   &--error {
-    border-color: $input-error-color;
+    border-color: $error-color;
     
     &:focus {
-      box-shadow: 0 0 0 2px rgba($input-error-color, 0.2);
+      border-color: $error-color;
+      box-shadow: $shadow-focus-error;
+    }
+    
+    &:hover:not(:disabled):not(:focus) {
+      border-color: $error-color;
     }
   }
 }
 
 // 错误信息
 .QinComponents-input-error-message {
-  margin-top: 4px;
-  font-size: 12px;
-  color: $input-error-color;
+  margin-top: $spacing-xs;
+  font-size: $font-size-sm;
+  color: $error-color;
+  line-height: $line-height-normal;
 } 

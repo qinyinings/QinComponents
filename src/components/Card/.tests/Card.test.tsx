@@ -1,8 +1,8 @@
 import React from 'react';
 import { describe, it, expect } from 'vitest';
 import { render, screen } from '@testing-library/react';
-import { Card } from '../Card';
-import { Button } from '../../Button/Button';
+import { Card } from '../src';
+import { Button } from '../../Button/src';
 
 describe('Card 组件', () => {
   it('应该正确渲染默认卡片', () => {

@@ -7,33 +7,34 @@ describe('Button 组件', () => {
   it('应该正确渲染默认按钮', () => {
     render(<Button label="测试按钮" />);
     
-    const buttonElement = screen.getByText('测试按钮');
+    const buttonElement = screen.getByRole('button');
     expect(buttonElement).toBeInTheDocument();
     expect(buttonElement).toHaveClass('QinComponents-button');
     expect(buttonElement).toHaveClass('QinComponents-button--primary');
     expect(buttonElement).toHaveClass('QinComponents-button--medium');
+    expect(screen.getByText('测试按钮')).toBeInTheDocument();
   });
 
   it('应该使用正确的自定义类名渲染不同变体的按钮', () => {
     const { rerender } = render(<Button label="测试按钮" variant="secondary" />);
-    expect(screen.getByText('测试按钮')).toHaveClass('QinComponents-button--secondary');
+    expect(screen.getByRole('button')).toHaveClass('QinComponents-button--secondary');
     
     rerender(<Button label="测试按钮" variant="outline" />);
-    expect(screen.getByText('测试按钮')).toHaveClass('QinComponents-button--outline');
+    expect(screen.getByRole('button')).toHaveClass('QinComponents-button--outline');
   });
 
   it('应该使用正确的自定义类名渲染不同尺寸的按钮', () => {
     const { rerender } = render(<Button label="测试按钮" size="small" />);
-    expect(screen.getByText('测试按钮')).toHaveClass('QinComponents-button--small');
+    expect(screen.getByRole('button')).toHaveClass('QinComponents-button--small');
     
     rerender(<Button label="测试按钮" size="large" />);
-    expect(screen.getByText('测试按钮')).toHaveClass('QinComponents-button--large');
+    expect(screen.getByRole('button')).toHaveClass('QinComponents-button--large');
   });
 
   it('禁用状态的按钮应该有 disabled 属性', () => {
     render(<Button label="测试按钮" disabled />);
     
-    const buttonElement = screen.getByText('测试按钮');
+    const buttonElement = screen.getByRole('button');
     expect(buttonElement).toBeDisabled();
   });
 
@@ -49,7 +50,7 @@ describe('Button 组件', () => {
     const handleClick = vi.fn();
     render(<Button label="测试按钮" onClick={handleClick} disabled />);
     
-    fireEvent.click(screen.getByText('测试按钮'));
+    fireEvent.click(screen.getByRole('button'));
     expect(handleClick).not.toHaveBeenCalled();
   });
 }); 

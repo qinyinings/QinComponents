@@ -1,8 +1,12 @@
 #!/usr/bin/env node
 
-const fs = require('fs');
-const path = require('path');
-const readline = require('readline');
+import fs from 'fs';
+import path from 'path';
+import readline from 'readline';
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const rl = readline.createInterface({
   input: process.stdin,
@@ -82,6 +86,7 @@ async function main() {
     'components',
     formattedComponentName
   );
+  const srcDir = path.join(componentDir, 'src');
   const storiesDir = path.join(componentDir, '.stories');
   const testsDir = path.join(componentDir, '.tests');
 
@@ -89,6 +94,9 @@ async function main() {
   try {
     if (!fs.existsSync(componentDir)) {
       fs.mkdirSync(componentDir, { recursive: true });
+    }
+    if (!fs.existsSync(srcDir)) {
+      fs.mkdirSync(srcDir, { recursive: true });
     }
     if (!fs.existsSync(storiesDir)) {
       fs.mkdirSync(storiesDir, { recursive: true });
@@ -110,11 +118,11 @@ async function main() {
   // 写入文件
   try {
     fs.writeFileSync(
-      path.join(componentDir, `${formattedComponentName}.tsx`),
+      path.join(srcDir, 'index.tsx'),
       componentContent
     );
     fs.writeFileSync(
-      path.join(componentDir, `${formattedComponentName}.scss`),
+      path.join(srcDir, 'index.scss'),
       scssContent
     );
     fs.writeFileSync(
@@ -127,18 +135,18 @@ async function main() {
     );
 
     console.log(`\n✅ 成功创建 ${formattedComponentName} 组件相关文件：`);
-    console.log(`- ${formattedComponentName}.tsx`);
-    console.log(`- ${formattedComponentName}.scss`);
+    console.log(`- src/index.tsx`);
+    console.log(`- src/index.scss`);
     console.log(`- .stories/${formattedComponentName}.stories.tsx`);
     console.log(`- .tests/${formattedComponentName}.test.tsx`);
 
     // 提示更新 index.ts
     console.log('\n别忘了在 src/components/index.ts 文件中添加导出：');
     console.log(
-      `export { ${formattedComponentName} } from './${formattedComponentName}/${formattedComponentName}';`
+      `export { ${formattedComponentName} } from './${formattedComponentName}/src';`
     );
     console.log(
-      `export type { ${formattedComponentName}Props } from './${formattedComponentName}/${formattedComponentName}';`
+      `export type { ${formattedComponentName}Props } from './${formattedComponentName}/src';`
     );
   } catch (err) {
     console.error('写入文件失败:', err);
@@ -175,7 +183,7 @@ function generateComponentContent(componentName) {
   const childrenDestructure = hasChildren ? '\n  children,' : '';
 
   return `import React from 'react';
-import './${componentName}.scss';
+import './index.scss';
 
 export interface ${componentName}Props {
 ${propsInterface}
@@ -204,16 +212,15 @@ export default ${componentName};`;
 
 // 生成 SCSS 内容
 function generateScssContent(componentName) {
-  return `@use "sass:color";
-
-// ${componentName} 变量
-$${componentName.toLowerCase()}-color: #333333;
+  return `@use "../../../styles/variables" as *;
 
 // ${componentName} 基础样式
 .QinComponents-${componentName.toLowerCase()} {
   display: flex;
-  color: $${componentName.toLowerCase()}-color;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  color: $text-color-primary;
+  font-family: $font-family-sans;
+  font-size: $font-size-base;
+  line-height: $line-height-normal;
 }`;
 }
 
@@ -263,7 +270,7 @@ function generateStoriesContent(componentName) {
     .join('\n');
 
   return `import type { Meta, StoryObj } from '@storybook/react';
-import { ${componentName} } from '../${componentName}';
+import { ${componentName} } from '../src';
 
 const meta = {
   title: 'Components/${componentName}',
@@ -350,7 +357,7 @@ function generateTestsContent(componentName) {
   return `import React from 'react';
 import { describe, it, expect } from 'vitest';
 import { render, screen } from '@testing-library/react';
-import { ${componentName} } from '../${componentName}';
+import { ${componentName} } from '../src';
 
 describe('${componentName} 组件', () => {
   it('应该正确渲染默认组件', () => {
