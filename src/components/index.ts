@@ -8,6 +8,12 @@ export type { InputProps } from './Input/src';
 export { Card } from './Card/src';
 export type { CardProps } from './Card/src';
 
+export { PathAnimation } from './PathAnimation/src';
+export type { PathAnimationProps } from './PathAnimation/src';
+
+export { FileUpload } from './FileUpload/src';
+export type { FileUploadProps } from './FileUpload/src';
+
 // 导出其他未来组件
 // export { ComponentName } from './ComponentName/ComponentName';
 // export type { ComponentNameProps } from './ComponentName/ComponentName'; 

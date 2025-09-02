@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Button, Card, Input } from './components'
+import { Button, Card, Input, FileUpload } from './components'
 import './App.css'
 
 function App() {
@@ -100,6 +100,169 @@ function App() {
                 <Card bordered={false}>
                   这是一个无边框的卡片，适用于需要更简洁视觉效果的场景。
                 </Card>
+              </div>
+            </Card>
+
+            {/* FileUpload 组件展示 */}
+            <Card title="FileUpload 大文件上传组件" bordered>
+              <div style={{ maxWidth: '600px' }}>
+                <h4 style={{ margin: '0 0 16px 0', fontSize: '16px' }}>标准模式 (显示文件列表)</h4>
+                <FileUpload
+                  config={{
+                    url: '/api/upload', // 这是一个示例URL，实际使用时需要配置真实的上传接口
+                    chunkSize: 1024 * 1024 * 2, // 2MB分片
+                    concurrent: 3, // 并发上传3个分片
+                    maxRetries: 3, // 最多重试3次
+                    enableResume: true, // 启用断点续传
+                    enableHash: true, // 启用文件哈希
+                    maxFileSize: 1024 * 1024 * 100, // 最大100MB
+                    maxFiles: 5, // 最多5个文件
+                    debug: true, // 启用调试模式
+                  }}
+                  multiple={true}
+                  draggable={true}
+                  showFileList={true}
+                  onFileSelect={(files) => {
+                    console.log('选择了文件:', files);
+                  }}
+                  onUploadStart={(fileInfo) => {
+                    console.log('开始上传:', fileInfo.name);
+                  }}
+                  onUploadProgress={(fileInfo) => {
+                    console.log('上传进度:', fileInfo.name, fileInfo.progress + '%');
+                  }}
+                  onUploadComplete={(fileInfo) => {
+                    console.log('上传完成:', fileInfo.name);
+                  }}
+                  onUploadError={(fileInfo, error) => {
+                    console.error('上传失败:', fileInfo.name, error);
+                  }}
+                  onAllComplete={(files) => {
+                    console.log('所有文件上传完成:', files);
+                  }}
+                >
+                  <div style={{ textAlign: 'center', padding: '20px' }}>
+                    <div style={{ fontSize: '48px', marginBottom: '16px' }}>📁</div>
+                    <div style={{ fontSize: '16px', marginBottom: '8px' }}>
+                      点击选择文件或拖拽文件到此处
+                    </div>
+                    <div style={{ fontSize: '14px', color: '#666' }}>
+                      支持大文件上传、断点续传、分片重试
+                    </div>
+                  </div>
+                </FileUpload>
+                
+                <h4 style={{ margin: '32px 0 16px 0', fontSize: '16px' }}>简洁模式 - 智能上传 (推荐)</h4>
+                <FileUpload
+                  config={{
+                    url: '/api/upload', // 这是一个示例URL，实际使用时需要配置真实的上传接口
+                    chunkSize: 1024 * 1024 * 2, // 2MB分片
+                    concurrent: 3, // 并发上传3个分片
+                    maxRetries: 3, // 最多重试3次
+                    enableResume: true, // 启用断点续传
+                    enableHash: true, // 启用文件哈希
+                    maxFileSize: 1024 * 1024 * 100, // 最大100MB
+                    maxFiles: 3, // 最多3个文件
+                    debug: true, // 启用调试模式
+                  }}
+                  multiple={true}
+                  draggable={true}
+                  showFileList={false} // 不显示文件列表
+                  autoUploadStrategy="smart" // 智能模式：有上传时等待，无上传时立即开始
+                  onFileSelect={(files) => {
+                    console.log('智能模式选择了文件:', files);
+                  }}
+                  onUploadStart={(fileInfo) => {
+                    console.log('智能模式开始上传:', fileInfo.name);
+                  }}
+                  onUploadProgress={(fileInfo) => {
+                    console.log('智能模式上传进度:', fileInfo.name, fileInfo.progress + '%');
+                  }}
+                  onUploadComplete={(fileInfo) => {
+                    console.log('智能模式上传完成:', fileInfo.name);
+                  }}
+                  onUploadError={(fileInfo, error) => {
+                    console.error('智能模式上传失败:', fileInfo.name, error);
+                  }}
+                  onAllComplete={(files) => {
+                    console.log('智能模式所有文件上传完成:', files);
+                  }}
+                >
+                  <div style={{ textAlign: 'center', padding: '20px' }}>
+                    <div style={{ fontSize: '48px', marginBottom: '16px' }}>🧠</div>
+                    <div style={{ fontSize: '16px', marginBottom: '8px' }}>
+                      智能上传模式
+                    </div>
+                    <div style={{ fontSize: '14px', color: '#666' }}>
+                      自动避免并发冲突，优化上传体验
+                    </div>
+                  </div>
+                </FileUpload>
+                
+                <h4 style={{ margin: '32px 0 16px 0', fontSize: '16px' }}>队列模式 - 逐个上传</h4>
+                <FileUpload
+                  config={{
+                    url: '/api/upload',
+                    chunkSize: 1024 * 1024 * 2,
+                    concurrent: 3,
+                    maxRetries: 3,
+                    enableResume: true,
+                    enableHash: true,
+                    maxFileSize: 1024 * 1024 * 100,
+                    maxFiles: 3,
+                    debug: true,
+                  }}
+                  multiple={true}
+                  draggable={true}
+                  showFileList={false}
+                  autoUploadStrategy="queue" // 队列模式：一个文件完成后再上传下一个
+                  onFileSelect={(files) => {
+                    console.log('队列模式选择了文件:', files);
+                  }}
+                  onUploadStart={(fileInfo) => {
+                    console.log('队列模式开始上传:', fileInfo.name);
+                  }}
+                  onUploadProgress={(fileInfo) => {
+                    console.log('队列模式上传进度:', fileInfo.name, fileInfo.progress + '%');
+                  }}
+                  onUploadComplete={(fileInfo) => {
+                    console.log('队列模式上传完成:', fileInfo.name);
+                  }}
+                  onUploadError={(fileInfo, error) => {
+                    console.error('队列模式上传失败:', fileInfo.name, error);
+                  }}
+                  onAllComplete={(files) => {
+                    console.log('队列模式所有文件上传完成:', files);
+                  }}
+                >
+                  <div style={{ textAlign: 'center', padding: '20px' }}>
+                    <div style={{ fontSize: '48px', marginBottom: '16px' }}>📋</div>
+                    <div style={{ fontSize: '16px', marginBottom: '8px' }}>
+                      队列上传模式
+                    </div>
+                    <div style={{ fontSize: '14px', color: '#666' }}>
+                      文件依次上传，避免网络拥塞
+                    </div>
+                  </div>
+                </FileUpload>
+                
+                <div style={{ marginTop: '16px', padding: '12px', backgroundColor: '#f5f5f5', borderRadius: '6px' }}>
+                  <h4 style={{ margin: '0 0 8px 0', fontSize: '14px' }}>功能特点：</h4>
+                  <ul style={{ margin: 0, paddingLeft: '20px', fontSize: '12px', color: '#666' }}>
+                    <li>支持大文件分片上传（默认2MB分片）</li>
+                    <li>支持断点续传，刷新页面后可继续上传</li>
+                    <li>分片失败自动重试（最多3次）</li>
+                    <li>并发上传多个分片提高效率</li>
+                    <li>实时显示上传进度和速度</li>
+                    <li>支持拖拽上传和多文件上传</li>
+                    <li><strong>新功能：智能自动上传，避免并发冲突</strong></li>
+                    <li><strong>新功能：队列上传模式，逐个处理文件</strong></li>
+                    <li><strong>新功能：三种上传策略 (immediate/queue/smart)</strong></li>
+                  </ul>
+                  <p style={{ margin: '8px 0 0 0', fontSize: '12px', color: '#ff4d4f' }}>
+                    注意：示例中的上传URL是模拟的，实际使用时需要配置真实的服务器接口。
+                  </p>
+                </div>
               </div>
             </Card>
           </div>

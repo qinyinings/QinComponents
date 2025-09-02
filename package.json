@@ -4,18 +4,19 @@
   "version": "0.1.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
-    "build": "tsc -b && vite build",
+    "dev": "npx vite",
+    "build": "tsc -b && npx vite build",
     "lint": "eslint .",
-    "preview": "vite preview",
-    "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build",
-    "test": "vitest",
-    "test:ui": "vitest --ui",
-    "test:run": "vitest run",
-    "coverage": "vitest run --coverage"
+    "preview": "npx vite preview",
+    "storybook": "npx storybook dev -p 6006",
+    "build-storybook": "npx storybook build",
+    "test": "npx vitest",
+    "test:ui": "npx vitest --ui",
+    "test:run": "npx vitest run",
+    "coverage": "npx vitest run --coverage"
   },
   "dependencies": {
+    "gsap": "^3.12.5",
     "react": "^19.1.0",
     "react-dom": "^19.1.0"
   },

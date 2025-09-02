@@ -1,0 +1,535 @@
+@use '../../../styles/variables.scss' as *;
+
+// 文件上传组件主容器
+.QinComponents-file-upload {
+  width: 100%;
+  font-family: inherit;
+  
+  // &--uploading {
+  //   .QinComponents-upload-area {
+  //     opacity: 0.7;
+  //   }
+    
+  //   // 只禁用上传区域的交互，不影响文件列表中的按钮
+  //   .QinComponents-upload-area {
+  //     pointer-events: none;
+  //   }
+  // }
+}
+
+// 上传区域
+.QinComponents-upload-area {
+  border: 2px dashed #d9d9d9;
+  border-radius: 8px;
+  padding: 40px 20px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  background-color: #fafafa;
+  min-height: 120px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  
+  &:hover {
+    border-color: #1890ff;
+    background-color: #f0f8ff;
+  }
+  
+  &--drag-over {
+    border-color: #1890ff;
+    background-color: #e6f7ff;
+    transform: scale(1.02);
+  }
+  
+  // &--uploading {
+  //   cursor: not-allowed;
+  //   opacity: 0.6;
+  // }
+  
+  &__content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+  }
+  
+  &__icon {
+    font-size: 48px;
+    opacity: 0.6;
+  }
+  
+  &__text {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  
+  &__main-text {
+    font-size: 16px;
+    color: #333;
+    font-weight: 500;
+  }
+  
+  &__sub-text {
+    font-size: 14px;
+    color: #666;
+  }
+  
+  &__drag-text {
+    font-size: 16px;
+    color: #1890ff;
+    font-weight: 500;
+  }
+}
+
+// 文件列表
+.QinComponents-file-list {
+  margin-top: 20px;
+  
+  &__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid #e8e8e8;
+  }
+  
+  &__title {
+    font-size: 16px;
+    font-weight: 500;
+    color: #333;
+  }
+  
+  &__clear-btn {
+    background: none;
+    border: 1px solid #d9d9d9;
+    border-radius: 4px;
+    padding: 4px 8px;
+    font-size: 12px;
+    color: #666;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    
+    &:hover {
+      border-color: #1890ff;
+      color: #1890ff;
+    }
+  }
+  
+  &__items {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+}
+
+// 文件项
+.QinComponents-file-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 16px;
+  border: 1px solid #e8e8e8;
+  border-radius: 8px;
+  background-color: #fff;
+  transition: all 0.2s ease;
+  
+  &:hover {
+    border-color: #d9d9d9;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  &--completed {
+    border-color: #52c41a;
+    background-color: #f6ffed;
+  }
+  
+  &--error {
+    border-color: #ff4d4f;
+    background-color: #fff2f0;
+  }
+  
+  &--uploading {
+    border-color: #1890ff;
+    background-color: #f0f8ff;
+  }
+  
+  &--paused {
+    border-color: #faad14;
+    background-color: #fffbe6;
+  }
+  
+  &--cancelled {
+    border-color: #d9d9d9;
+    background-color: #f5f5f5;
+    opacity: 0.7;
+  }
+  
+  &__icon {
+    font-size: 24px;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+  
+  &__info {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  
+  &__name {
+    font-size: 14px;
+    font-weight: 500;
+    color: #333;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  
+  &__details {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+  
+  &__size {
+    font-size: 12px;
+    color: #666;
+  }
+  
+  &__status {
+    font-size: 12px;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-weight: 500;
+    
+    &--idle {
+      background-color: #f0f0f0;
+      color: #666;
+    }
+    
+    &--uploading {
+      background-color: #e6f7ff;
+      color: #1890ff;
+    }
+    
+    &--paused {
+      background-color: #fff7e6;
+      color: #faad14;
+    }
+    
+    &--completed {
+      background-color: #f6ffed;
+      color: #52c41a;
+    }
+    
+    &--error {
+      background-color: #fff2f0;
+      color: #ff4d4f;
+    }
+    
+    &--cancelled {
+      background-color: #f0f0f0;
+      color: #999;
+    }
+  }
+  
+  &__error {
+    font-size: 12px;
+    color: #ff4d4f;
+    max-width: 200px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  
+  &__progress {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  
+  &__progress-bar {
+    flex: 1;
+    height: 6px;
+    background-color: #f0f0f0;
+    border-radius: 3px;
+    overflow: hidden;
+  }
+  
+  &__progress-fill {
+    height: 100%;
+    background-color: #1890ff;
+    transition: width 0.3s ease;
+    border-radius: 3px;
+    
+    .QinComponents-file-item--error & {
+      background-color: #ff4d4f;
+    }
+    
+    .QinComponents-file-item--paused & {
+      background-color: #faad14;
+    }
+    
+    .QinComponents-file-item--completed & {
+      background-color: #52c41a;
+    }
+  }
+  
+  &__progress-text {
+    font-size: 12px;
+    color: #666;
+    min-width: 35px;
+    text-align: right;
+  }
+  
+  &__stats {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+    font-size: 12px;
+    color: #666;
+  }
+  
+  &__speed,
+  &__remaining,
+  &__uploaded {
+    white-space: nowrap;
+  }
+  
+  &__chunks {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 11px;
+    color: #999;
+  }
+  
+  &__chunks-error {
+    color: #ff4d4f;
+  }
+  
+  &__actions {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    flex-shrink: 0;
+  }
+  
+  &__btn {
+    padding: 4px 8px;
+    font-size: 12px;
+    border: 1px solid #d9d9d9;
+    border-radius: 4px;
+    background: #fff;
+    color: #666;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+    
+    &:hover {
+      border-color: #1890ff;
+      color: #1890ff;
+    }
+    
+    &--start,
+    &--resume {
+      border-color: #52c41a;
+      color: #52c41a;
+      
+      &:hover {
+        background-color: #52c41a;
+        color: #fff;
+      }
+    }
+    
+    &--pause {
+      border-color: #faad14;
+      color: #faad14;
+      
+      &:hover {
+        background-color: #faad14;
+        color: #fff;
+      }
+    }
+    
+    &--cancel,
+    &--remove {
+      border-color: #ff4d4f;
+      color: #ff4d4f;
+      
+      &:hover {
+        background-color: #ff4d4f;
+        color: #fff;
+      }
+    }
+    
+    &--retry {
+      border-color: #1890ff;
+      color: #1890ff;
+      
+      &:hover {
+        background-color: #1890ff;
+        color: #fff;
+      }
+    }
+  }
+}
+
+// 响应式设计
+@media (max-width: 768px) {
+  .QinComponents-upload-area {
+    padding: 30px 16px;
+    min-height: 100px;
+    
+    &__icon {
+      font-size: 36px;
+    }
+    
+    &__main-text {
+      font-size: 14px;
+    }
+    
+    &__sub-text {
+      font-size: 12px;
+    }
+  }
+  
+  .QinComponents-file-item {
+    padding: 12px;
+    
+    &__details {
+      gap: 8px;
+    }
+    
+    &__stats {
+      gap: 8px;
+    }
+    
+    &__actions {
+      flex-direction: column;
+      gap: 4px;
+    }
+    
+    &__btn {
+      font-size: 11px;
+      padding: 3px 6px;
+    }
+  }
+  
+  .QinComponents-file-list {
+    &__header {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 8px;
+    }
+  }
+}
+
+// 暗色主题支持
+@media (prefers-color-scheme: dark) {
+  .QinComponents-file-upload {
+    .QinComponents-upload-area {
+      background-color: #1f1f1f;
+      border-color: #434343;
+      
+      &:hover {
+        background-color: #2a2a2a;
+        border-color: #1890ff;
+      }
+      
+      &--drag-over {
+        background-color: #0d1929;
+      }
+      
+      &__main-text {
+        color: #fff;
+      }
+      
+      &__sub-text {
+        color: #ccc;
+      }
+    }
+    
+    .QinComponents-file-item {
+      background-color: #1f1f1f;
+      border-color: #434343;
+      
+      &:hover {
+        border-color: #666;
+      }
+      
+      &--completed {
+        background-color: #162312;
+        border-color: #52c41a;
+      }
+      
+      &--error {
+        background-color: #2a1215;
+        border-color: #ff4d4f;
+      }
+      
+      &--uploading {
+        background-color: #111b26;
+        border-color: #1890ff;
+      }
+      
+      &--paused {
+        background-color: #2b2611;
+        border-color: #faad14;
+      }
+      
+      &__name {
+        color: #fff;
+      }
+      
+      &__size,
+      &__stats,
+      &__chunks {
+        color: #ccc;
+      }
+      
+      &__progress-bar {
+        background-color: #434343;
+      }
+      
+      &__btn {
+        background-color: #1f1f1f;
+        border-color: #434343;
+        color: #ccc;
+        
+        &:hover {
+          border-color: #1890ff;
+          color: #1890ff;
+        }
+      }
+    }
+    
+    .QinComponents-file-list {
+      &__title {
+        color: #fff;
+      }
+      
+      &__header {
+        border-color: #434343;
+      }
+      
+      &__clear-btn {
+        background-color: #1f1f1f;
+        border-color: #434343;
+        color: #ccc;
+        
+        &:hover {
+          border-color: #1890ff;
+          color: #1890ff;
+        }
+      }
+    }
+  }
+}

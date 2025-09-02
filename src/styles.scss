@@ -9,6 +9,7 @@
 @use './components/Button/src/index';
 @use './components/Input/src/index';
 @use './components/Card/src/index';
+@use './components/PathAnimation/src/index';
 
 // 注意：当添加新组件时，需要在这里添加对应的样式导入
 // 例如：@use './components/NewComponent/src/index';
