@@ -1,0 +1,379 @@
+@use '../../../styles/variables.scss' as *;
+
+// 虚拟列表主容器
+.QinComponents-virtual-list {
+  position: relative;
+  overflow: auto;
+  width: 100%;
+  font-family: inherit;
+  
+  // 水平滚动模式
+  &--horizontal {
+    overflow-x: auto;
+    overflow-y: hidden;
+    
+    .QinComponents-virtual-list__content {
+      display: flex;
+      flex-direction: row;
+    }
+    
+    .QinComponents-virtual-list__item {
+      position: relative !important;
+      top: auto !important;
+      left: auto !important;
+      right: auto !important;
+      height: 100% !important;
+      flex-shrink: 0;
+    }
+  }
+  
+  // 加载状态
+  &--loading {
+    .QinComponents-virtual-list__content {
+      opacity: 0.7;
+    }
+  }
+  
+  // 滚动条样式
+  &::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+  
+  &::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 4px;
+  }
+  
+  &::-webkit-scrollbar-thumb {
+    background: #c1c1c1;
+    border-radius: 4px;
+    transition: background-color 0.2s ease;
+    
+    &:hover {
+      background: #a8a8a8;
+    }
+  }
+  
+  &::-webkit-scrollbar-corner {
+    background: #f1f1f1;
+  }
+}
+
+// 虚拟列表内容容器
+.QinComponents-virtual-list__content {
+  position: relative;
+  width: 100%;
+  transition: opacity 0.2s ease;
+}
+
+// 虚拟列表项
+.QinComponents-virtual-list__item {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  transition: opacity 0.2s ease;
+  
+  // 可见状态
+  &--visible {
+    opacity: 1;
+  }
+  
+  // 不可见状态（缓冲区）
+  &:not(&--visible) {
+    opacity: 0.8;
+  }
+}
+
+// 虚拟项目组件
+.QinComponents-virtual-item {
+  width: 100%;
+  
+  &--visible {
+    // 可见项目的特殊样式
+  }
+}
+
+// 空状态
+.QinComponents-virtual-list__empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  padding: 40px 20px;
+  color: #999;
+  
+  &-icon {
+    font-size: 48px;
+    margin-bottom: 16px;
+    opacity: 0.6;
+  }
+  
+  &-text {
+    font-size: 16px;
+    color: #666;
+  }
+}
+
+// 加载状态
+.QinComponents-virtual-list__loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  padding: 40px 20px;
+  color: #666;
+  
+  &-spinner {
+    width: 32px;
+    height: 32px;
+    border: 3px solid #f3f3f3;
+    border-top: 3px solid #1890ff;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin-bottom: 16px;
+  }
+  
+  &-text {
+    font-size: 14px;
+    color: #666;
+  }
+}
+
+// 底部加载状态
+.QinComponents-virtual-list__bottom-loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  color: #666;
+  
+  .QinComponents-virtual-list__loading-spinner {
+    width: 20px;
+    height: 20px;
+    border-width: 2px;
+    margin-bottom: 0;
+    margin-right: 8px;
+  }
+  
+  .QinComponents-virtual-list__loading-text {
+    font-size: 12px;
+  }
+}
+
+// 滚动指示器
+.QinComponents-scroll-indicator {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 10px;
+  background: rgba(0, 0, 0, 0.7);
+  color: white;
+  border-radius: 4px;
+  font-size: 12px;
+  pointer-events: none;
+  z-index: 10;
+  
+  &__track {
+    width: 60px;
+    height: 4px;
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 2px;
+    position: relative;
+    overflow: hidden;
+  }
+  
+  &__thumb {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background: rgba(255, 255, 255, 0.8);
+    border-radius: 2px;
+    transition: transform 0.1s ease;
+  }
+  
+  &__info {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+  
+  &__progress {
+    font-weight: 500;
+  }
+  
+  &__range {
+    font-size: 10px;
+    opacity: 0.8;
+  }
+}
+
+// 旋转动画
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+// 响应式设计
+@media (max-width: 768px) {
+  .QinComponents-virtual-list {
+    &::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+  }
+  
+  .QinComponents-virtual-list__empty {
+    padding: 30px 16px;
+    
+    &-icon {
+      font-size: 36px;
+      margin-bottom: 12px;
+    }
+    
+    &-text {
+      font-size: 14px;
+    }
+  }
+  
+  .QinComponents-virtual-list__loading {
+    padding: 30px 16px;
+    
+    &-spinner {
+      width: 24px;
+      height: 24px;
+      border-width: 2px;
+      margin-bottom: 12px;
+    }
+    
+    &-text {
+      font-size: 12px;
+    }
+  }
+  
+  .QinComponents-scroll-indicator {
+    top: 8px;
+    right: 8px;
+    padding: 4px 8px;
+    font-size: 10px;
+    
+    &__track {
+      width: 40px;
+      height: 3px;
+    }
+    
+    &__range {
+      font-size: 9px;
+    }
+  }
+}
+
+// 暗色主题支持
+@media (prefers-color-scheme: dark) {
+  .QinComponents-virtual-list {
+    &::-webkit-scrollbar-track {
+      background: #2a2a2a;
+    }
+    
+    &::-webkit-scrollbar-thumb {
+      background: #555;
+      
+      &:hover {
+        background: #666;
+      }
+    }
+    
+    &::-webkit-scrollbar-corner {
+      background: #2a2a2a;
+    }
+  }
+  
+  .QinComponents-virtual-list__empty {
+    color: #ccc;
+    
+    &-text {
+      color: #999;
+    }
+  }
+  
+  .QinComponents-virtual-list__loading {
+    color: #ccc;
+    
+    &-spinner {
+      border-color: #444;
+      border-top-color: #1890ff;
+    }
+    
+    &-text {
+      color: #999;
+    }
+  }
+  
+  .QinComponents-virtual-list__bottom-loading {
+    color: #ccc;
+    
+    .QinComponents-virtual-list__loading-text {
+      color: #999;
+    }
+  }
+}
+
+// 高性能优化
+.QinComponents-virtual-list {
+  // 启用硬件加速
+  transform: translateZ(0);
+  
+  // 优化滚动性能
+  -webkit-overflow-scrolling: touch;
+  
+  .QinComponents-virtual-list__item {
+    // 启用硬件加速
+    transform: translateZ(0);
+    
+    // 优化重绘性能
+    will-change: transform;
+  }
+}
+
+// 无障碍支持
+.QinComponents-virtual-list {
+  &:focus {
+    outline: 2px solid #1890ff;
+    outline-offset: -2px;
+  }
+  
+  &[aria-busy="true"] {
+    .QinComponents-virtual-list__content {
+      opacity: 0.6;
+    }
+  }
+}
+
+// 打印样式
+@media print {
+  .QinComponents-virtual-list {
+    overflow: visible !important;
+    height: auto !important;
+    
+    .QinComponents-virtual-list__content {
+      position: static !important;
+      height: auto !important;
+    }
+    
+    .QinComponents-virtual-list__item {
+      position: static !important;
+      page-break-inside: avoid;
+    }
+    
+    .QinComponents-scroll-indicator {
+      display: none !important;
+    }
+  }
+}

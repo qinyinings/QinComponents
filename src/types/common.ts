@@ -435,3 +435,194 @@ export interface UploadConfig {
    */
   debug?: boolean;
 }
+
+/**
+ * 虚拟滚动项目数据接口
+ */
+export interface VirtualListItem<T = any> {
+  /**
+   * 项目唯一标识
+   */
+  id: string | number;
+  
+  /**
+   * 项目数据
+   */
+  data: T;
+  
+  /**
+   * 项目高度（可选，用于固定高度优化）
+   */
+  height?: number;
+  
+  /**
+   * 项目索引
+   */
+  index?: number;
+}
+
+/**
+ * 虚拟滚动配置接口
+ */
+export interface VirtualListConfig {
+  /**
+   * 项目高度
+   * - 数字：固定高度
+   * - 函数：动态计算高度
+   * @default 50
+   */
+  itemHeight?: number | ((index: number, data: any) => number);
+  
+  /**
+   * 缓冲区大小（渲染可视区域外的项目数量）
+   * @default 5
+   */
+  overscan?: number;
+  
+  /**
+   * 是否启用虚拟化
+   * @default true
+   */
+  enabled?: boolean;
+  
+  /**
+   * 滚动容器高度
+   * @default 400
+   */
+  height?: number | string;
+  
+  /**
+   * 滚动容器宽度
+   * @default '100%'
+   */
+  width?: number | string;
+  
+  /**
+   * 是否启用水平滚动
+   * @default false
+   */
+  horizontal?: boolean;
+  
+  /**
+   * 滚动阈值（触发滚动事件的最小距离）
+   * @default 1
+   */
+  scrollThreshold?: number;
+  
+  /**
+   * 是否启用平滑滚动
+   * @default true
+   */
+  smoothScroll?: boolean;
+  
+  /**
+   * 预估项目高度（用于动态高度计算的初始值）
+   * @default 50
+   */
+  estimatedItemHeight?: number;
+}
+
+/**
+ * 虚拟滚动范围接口
+ */
+export interface VirtualRange {
+  /**
+   * 开始索引
+   */
+  startIndex: number;
+  
+  /**
+   * 结束索引
+   */
+  endIndex: number;
+  
+  /**
+   * 可视区域开始索引
+   */
+  visibleStartIndex: number;
+  
+  /**
+   * 可视区域结束索引
+   */
+  visibleEndIndex: number;
+}
+
+/**
+ * 虚拟滚动项目位置信息
+ */
+export interface VirtualItemPosition {
+  /**
+   * 项目索引
+   */
+  index: number;
+  
+  /**
+   * 项目高度
+   */
+  height: number;
+  
+  /**
+   * 项目顶部偏移量
+   */
+  top: number;
+  
+  /**
+   * 项目底部偏移量
+   */
+  bottom: number;
+}
+
+/**
+ * 虚拟滚动状态接口
+ */
+export interface VirtualScrollState {
+  /**
+   * 滚动位置
+   */
+  scrollTop: number;
+  
+  /**
+   * 滚动方向
+   */
+  scrollDirection: 'up' | 'down' | null;
+  
+  /**
+   * 是否正在滚动
+   */
+  isScrolling: boolean;
+  
+  /**
+   * 容器高度
+   */
+  containerHeight: number;
+  
+  /**
+   * 总内容高度
+   */
+  totalHeight: number;
+  
+  /**
+   * 当前渲染范围
+   */
+  range: VirtualRange;
+  
+  /**
+   * 项目位置信息列表
+   */
+  itemPositions: VirtualItemPosition[];
+}
+
+/**
+ * 虚拟滚动回调函数类型
+ */
+export type VirtualScrollCallback = (state: VirtualScrollState) => void;
+
+/**
+ * 虚拟滚动项目渲染函数类型
+ */
+export type VirtualItemRenderer<T = any> = (props: {
+  index: number;
+  data: T;
+  style: React.CSSProperties;
+  isVisible: boolean;
+}) => React.ReactNode;

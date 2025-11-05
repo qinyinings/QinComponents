@@ -14,6 +14,9 @@ export type { PathAnimationProps } from './PathAnimation/src';
 export { FileUpload } from './FileUpload/src';
 export type { FileUploadProps } from './FileUpload/src';
 
+export { VirtualList } from './VirtualList/src';
+export type { VirtualListProps, VirtualListRef } from './VirtualList/src';
+
 // 导出其他未来组件
 // export { ComponentName } from './ComponentName/ComponentName';
 // export type { ComponentNameProps } from './ComponentName/ComponentName'; 
